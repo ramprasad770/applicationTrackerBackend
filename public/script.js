@@ -70,19 +70,6 @@ myID=myID.slice(3,myID.length-1)
 console.log(myID)
 
 
-
-// candidate profile statistics
-
-// let user={
-//     details:{
-//         name:"Ramprasad",
-//         applied:0,
-//         processing:0,
-//         rejected:0
-//     },
-//     jobs:[]
-// }
-
 let user;
 
 fetch('https://job-tracker-yvvt.onrender.com/getuser')
@@ -127,13 +114,7 @@ function showJobs(){
         total_applications.appendChild(div1)
     }
 
-//     <h2>Company Name</h2>
-//     <div>
-//         <p>Role</p>
-//         <p>Applied Date</p>
-//         <p>Job link</p>
-//     </div>
-// </div>
+
 }
 
 
@@ -200,12 +181,3 @@ form.addEventListener('submit',(e)=>{
 })
 
 
-//implementing search
-companyNames=["zoho","airtel","hashagile"]
-function search(compName){
-    return companyNames.filter((Name)=>{
-        return Name.includes(compName)
-    })
-}
-
-// console.log(search("ai"))
