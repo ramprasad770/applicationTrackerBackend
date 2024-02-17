@@ -4,11 +4,24 @@
     box-sizing: border-box;
 }
 
-#profile,#track{
-    flex: 1;
+.display-companies{
+    background-color: white;
+    height: 150px;
+    overflow-y: scroll;
+}
+
+.update_track{
+    display: none;
+}
+
+#profile{
+    flex:0.7;
+}
+#track{
+    flex:1;
 }
 #search{
-    flex:0.6;
+    flex:1;
 }
 .welcome-heading{
     margin-top: 20px;
@@ -16,7 +29,9 @@
 }
 #logout{
     margin-right: 20px;
-    float: right;
+    position: absolute;
+    right:0;
+    
 }
 header{
     color: white;
@@ -25,6 +40,12 @@ header{
     display: flex;
     justify-content: center;
     align-items: center;
+}
+#form input{
+   margin-bottom: 5px;
+}
+.deletebtn{
+    margin-left: 70px;
 }
 
 footer{
@@ -52,6 +73,7 @@ footer a{
     main{
         display: flex;
         justify-content: space-around;
+        margin-top: 30px;
     }
     footer{
         position: absolute;

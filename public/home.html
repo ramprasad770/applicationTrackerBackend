@@ -12,37 +12,11 @@
     <header>
         <h1><span id="styletrack">Track </span><span id="styleh2">your job Application seamlessly</span></h1>
     </header>
-    <section class="welcome-heading">
-        <h1 id="display-welcome"></h1>
-        <button class="btn btn-info" id="logout" onclick="logout()">Logout</button>
-    </section>
+    <div class="welcome-heading">
+            <h1 id="display-welcome"></h1>
+            <button class="btn btn-info" id="logout" onclick="logout()">Logout</button>
+    </div>
     <main class="container-sm">
-        <section class="search" id="search">
-        <div>
-            <h2>Wanna change Application tack?</h2>
-            <nav class="navbar navbar-light bg-light">
-                <form class="form-inline">
-                    <input class="form-control" type="search" placeholder="Ex: Zoho" aria-label="Search">
-                    <button class="btn btn-outline-success" type="submit">Search Application</button>
-                </form>
-            </nav>
-        </div>
-        <div class="update_track">
-            <p id="">Company Name</p>
-            <p id="">Role</p>
-            <p id="">Applied Date</p>
-            <p id="">Status</p>
-            <select class="form-select" aria-label="Default select example">
-                <option selected>Change Track</option>
-                <option value="Applied">Applied</option>
-                <option value="Processing">Under processing</option>
-                <option value="Rejected">Rejected</option>
-              </select>
-              <br>
-            <button class="btn btn-info" onclick="changeStatus()">Change Status</button>
-        </div>
-
-        </section>
         <section class="profile" id="profile">
             <h2>Profile statistics</h2>
             <p id="candidate"></p>
@@ -51,20 +25,60 @@
             <p id="rejected"></p>
             <p id="totalApplications"></p>
         </section>
+
         <section class="track" id="track">
             <h2>Appled for new job?</h2>
             <h3>Create it's Track here</h3>
             <form class="form" id="form">
-                <input class="form-control" type="text" name="CompanyName" id="CompanyName" placeholder="Company Name" autocomplete="off">
+                <input class="form-control" type="text" name="CompanyName" id="CompanyName" placeholder="Company Name" autocomplete="off" required>
                 <input class="form-control" type="text" name="Role" id="Role" placeholder="Role" autocomplete="off">
                 <input class="form-control" type="text" name="JobLink" id="JobLink" placeholder="Applied link" autocomplete="off">
+                <input class="form-control" type="text" name="notes" id="Notes" placeholder="Ex: 1st Round On Next week">
                 <input class="form-control" type="date" name="AppliedDate" id="AppliedDate">
                 <input class="btn btn-info form-control" id="submit" type="submit" value="Add to Tracker">
             </form>
         </section>
+        
+        <section class="search" id="search">
+        <div>
+            <h2>Wanna change Application tack?</h2>
+            <nav class="navbar navbar-light bg-light">
+                <form class="form-inline">
+                    <input class="form-control" type="search" placeholder="Ex: Zoho" aria-label="Search" id="searchbar">
+                    <div class="display-companies">
+                        <!-- Relevant searches will display here -->
+                    </div>
+                    <button class="btn btn-outline-success" type="submit">Search Application</button>
+                </form>
+            </nav>
+        </div>
+        <div class="update_track">
+            <p id="">Company Name</p>
+            <p id="">Role</p>
+            <p id="">Applied Date</p>
+            <p id="">Notes</p>
+            <p id="">Status</p>
+            <label for="update-notes">Update Notes</label>
+            <input class="form-control" type="text" id="update-notes" placeholder="Ex: Selected for Next round of Interview"><br>
+            <label for="update-status">Update Status</label>
+            <select class="form-select" id="update-status" aria-label="Default select example">
+                <option selected>-- Change Track --</option>
+                <option value="Applied">Applied</option>
+                <option value="Processing">Under processing</option>
+                <option value="Rejected">Rejected</option>
+              </select>
+              <br>
+            <button class="btn btn-info" onclick="saveChanges()">Save Changes</button>
+        </div>
+        </section>
+        
     </main>
     <section>
-        <div class="container-sm" id="ApplicationsList">
+        <br>
+        <div class="container-sm">
+            <div class="row" id="ApplicationsList">
+                
+            </div>
         </div>
     </section>
     <footer>

@@ -9,6 +9,8 @@ router.get("/getuser",validateToken, async(req,res)=>{
     const id =req.cookies.id
     //access cookie with key id
     const user = await User.findOne({ _id: id });
+    user.email=undefined
+    user.password=undefined
     res.status(200).json(user);
   } catch (err) {
     console.log(err);

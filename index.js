@@ -39,6 +39,7 @@ const AddJob = require('./routes/AddJob')
 const UpdateJob = require('./routes/UpdateJob')
 const LogOut = require('./routes/LogOut')
 const getUser = require('./routes/getUser')
+const deleteJob = require('./routes/DeleteJob')
 
 //using routes
 app.use(Home)
@@ -48,6 +49,7 @@ app.use(AddJob)
 app.use(UpdateJob)
 app.use(LogOut)
 app.use(getUser)
+app.use(deleteJob)
 
 app.listen(port,()=>{
     console.log("server started on port :",port)

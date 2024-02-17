@@ -5,7 +5,8 @@ const ApplicationSchema = new mongoose.Schema({
     JobLink: String,
     AppliedDate: String,
     Role:String,
-    Status: String
+    Status: String,
+    Notes:String
 });
 
 const CompanySchema = new mongoose.Schema({

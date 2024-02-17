@@ -10,7 +10,7 @@ router.post("/add",validateToken, async(req,res)=>{
     const id =req.cookies.id
     //access cookie with key id
     const user = await User.findOne({ _id: id });
-    const {CompanyName,JobLink,AppliedDate,Role,Status} = req.body
+    const {CompanyName,JobLink,AppliedDate,Role,Notes} = req.body
     let company = user.jobs.find(job => job.CompanyName === CompanyName);
 
     // Create a new job application
@@ -18,7 +18,8 @@ router.post("/add",validateToken, async(req,res)=>{
         JobLink,
         AppliedDate,
         Role,
-        Status
+        Notes,
+        Status:"Applied"
     };
 
     if (company) {

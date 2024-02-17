@@ -3,7 +3,7 @@
 //logout
 async function logout() {
     try {
-        const response = await fetch('https://job-tracker-yvvt.onrender.com/logout');
+        const response = await fetch('http://localhost:3000/logout');
         const data = await response.json();
         console.log(data);
         location.reload();
@@ -16,7 +16,7 @@ async function logout() {
 //login
 async function login() {
     try {
-        let url = 'https://job-tracker-yvvt.onrender.com/login';
+        let url = 'http://localhost:3000/login';
         let email = document.getElementById('email').value
         let password = document.getElementById('password').value
         let data = {"email": email, "password": password};
@@ -70,14 +70,28 @@ myID=myID.slice(3,myID.length-1)
 console.log(myID)
 
 
+
+// candidate profile statistics
+
+// let user={
+//     details:{
+//         name:"Ramprasad",
+//         applied:0,
+//         processing:0,
+//         rejected:0
+//     },
+//     jobs:[]
+// }
+
 let user;
 
-fetch('https://job-tracker-yvvt.onrender.com/getuser')
+fetch('http://localhost:3000/getuser')
     .then(response => response.json())
     .then(responseData => {
         user = responseData;
         showDetails()
         showJobs()
+        companyNames=user.jobs.map((job)=>{ return job.CompanyName})
     })
 
 function showDetails(){
@@ -94,26 +108,29 @@ function showDetails(){
     document.querySelector('#display-welcome').innerHTML=`Welcome ${candidateName}`
 }
 
+
 function showJobs(){
     let jobs=user.jobs
     let total_applications = document.querySelector('#ApplicationsList')
     for(let i=0;i<jobs.length;i++){
         let div1=document.createElement('div');
         div1.setAttribute('class','company-name')
+        div1.setAttribute('class','col-12 col-md-3')
         div1.innerHTML=`<h2>${jobs[i].CompanyName}</h2>`
         for (let j=0;j<(jobs[i].applications.length);j++){
             let div2= document.createElement('div')
             let data =`<p>Role :${jobs[i].applications[j].Role}</p>
                        <p>Status :${jobs[i].applications[j].Status}</p>
                        <p>Applied Date :${jobs[i].applications[j].AppliedDate}</p>
-                       <a href='${jobs[i].applications[j].JobLink}' target='_blank'>Job Link</a><hr>`
+                       <p>Notes :${jobs[i].applications[j].Notes}</p>
+                       <a href='${jobs[i].applications[j].JobLink}' target='_blank'>Job Link</a>
+                       <button class='deletebtn btn btn-danger' onclick='deletejob("${jobs[i].CompanyName}","${jobs[i].applications[j]._id}")'>Remove From Track</button><hr>`
             div2.innerHTML=data
             div1.appendChild(div2)
             console.log(jobs[i].applications[j])
         }
         total_applications.appendChild(div1)
     }
-
 
 }
 
@@ -146,13 +163,14 @@ form.addEventListener('submit',(e)=>{
         let JobLink=document.querySelector('#JobLink').value
         let AppliedDate=document.querySelector('#AppliedDate').value
         let Role = document.querySelector('#Role').value
+        let Notes= document.querySelector('#Notes').value
         let Status="Applied"
-        let data={CompanyName,JobLink,AppliedDate,Status,Role}
+        let data={CompanyName,JobLink,AppliedDate,Status,Role,Notes}
         //send a post re add
 
         async function addjob() {
             try {
-                let url = 'https://job-tracker-yvvt.onrender.com/add';
+                let url = 'http://localhost:3000/add';
                 let response = await fetch(url, {
                     method: 'POST',
                     credentials: 'include',
@@ -181,3 +199,47 @@ form.addEventListener('submit',(e)=>{
 })
 
 
+//deleting job application
+function deletejob(companyName,job_id){
+    async function del() {
+        try {
+            let url = `http://localhost:3000/delete/${companyName}/${job_id}`;
+            let response = await fetch(url);
+            if (!response.ok) {
+                let error = await response.json();
+                document.getElementById('display-error').innerHTML = error.msg;
+                return;
+            }
+    
+            let responseData = await response.json();
+            console.log('Success:', responseData);
+            location.reload()
+    
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    }
+    del()
+
+}
+
+
+
+
+
+//implementing search
+let companyNames
+function search(compName){
+        return companyNames.filter((Name)=>{
+            return Name.includes(compName)
+        })
+}
+
+let searchInp=document.getElementById('searchbar')
+searchInp.addEventListener('keyup',(e)=>{
+    console.log(search(searchInp.value))
+})
+
+function getApplicationsByCompanyName(CompName){
+
+}
