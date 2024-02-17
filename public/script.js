@@ -3,7 +3,7 @@
 //logout
 async function logout() {
     try {
-        const response = await fetch('http://localhost:3000/logout');
+        const response = await fetch('https://job-tracker-yvvt.onrender.com/logout');
         const data = await response.json();
         console.log(data);
         location.reload();
@@ -16,7 +16,7 @@ async function logout() {
 //login
 async function login() {
     try {
-        let url = 'http://localhost:3000/login';
+        let url = 'https://job-tracker-yvvt.onrender.com/login';
         let email = document.getElementById('email').value
         let password = document.getElementById('password').value
         let data = {"email": email, "password": password};
@@ -85,7 +85,7 @@ console.log(myID)
 
 let user;
 
-fetch('http://localhost:3000/getuser')
+fetch('https://job-tracker-yvvt.onrender.com/getuser')
     .then(response => response.json())
     .then(responseData => {
         user = responseData;
@@ -171,7 +171,7 @@ form.addEventListener('submit',(e)=>{
 
         async function addjob() {
             try {
-                let url = 'http://localhost:3000/add';
+                let url = 'https://job-tracker-yvvt.onrender.com/add';
                 let response = await fetch(url, {
                     method: 'POST',
                     credentials: 'include',
