@@ -22,7 +22,7 @@ router.post('/register', async (req, res) => {
             Applied:0,
             Processing:0,
             Rejected:0
-        }});
+        },jobs:{}});
         await newUser.save();
         res.status(201).redirect('/');
     } catch {

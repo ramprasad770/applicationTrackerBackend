@@ -1,9 +1,9 @@
- 
+
 
 //logout
 async function logout() {
     try {
-        const response = await fetch('https://job-tracker-yvvt.onrender.com/logout');
+        const response = await fetch('http://localhost:3000/logout');
         const data = await response.json();
         console.log(data);
         location.reload();
@@ -16,7 +16,7 @@ async function logout() {
 //login
 async function login() {
     try {
-        let url = 'https://job-tracker-yvvt.onrender.com/login';
+        let url = 'http://localhost:3000/login';
         let email = document.getElementById('email').value
         let password = document.getElementById('password').value
         let data = {"email": email, "password": password};
@@ -70,28 +70,14 @@ myID=myID.slice(3,myID.length-1)
 console.log(myID)
 
 
-
-// candidate profile statistics
-
-// let user={
-//     details:{
-//         name:"Ramprasad",
-//         applied:0,
-//         processing:0,
-//         rejected:0
-//     },
-//     jobs:[]
-// }
-
 let user;
 
-fetch('https://job-tracker-yvvt.onrender.com/getuser')
+fetch('http://localhost:3000/getuser')
     .then(response => response.json())
     .then(responseData => {
         user = responseData;
         showDetails()
         showJobs()
-        companyNames=user.jobs.map((job)=>{ return job.CompanyName})
     })
 
 function showDetails(){
@@ -110,29 +96,30 @@ function showDetails(){
 
 
 function showJobs(){
+    console.log(user.jobs)
     let jobs=user.jobs
     let total_applications = document.querySelector('#ApplicationsList')
-    for(let i=0;i<jobs.length;i++){
+    for(let companyName in jobs){
         let div1=document.createElement('div');
         div1.setAttribute('class','company-name')
         div1.setAttribute('class','col-12 col-md-3')
-        div1.innerHTML=`<h2>${jobs[i].CompanyName}</h2>`
-        for (let j=0;j<(jobs[i].applications.length);j++){
+        div1.innerHTML=`<h2>${companyName}</h2>`
+        for (let j=0;j<(jobs[companyName].length);j++){
             let div2= document.createElement('div')
-            let data =`<p>Role :${jobs[i].applications[j].Role}</p>
-                       <p>Status :${jobs[i].applications[j].Status}</p>
-                       <p>Applied Date :${jobs[i].applications[j].AppliedDate}</p>
-                       <p>Notes :${jobs[i].applications[j].Notes}</p>
-                       <a href='${jobs[i].applications[j].JobLink}' target='_blank'>Job Link</a>
-                       <button class='deletebtn btn btn-danger' onclick='deletejob("${jobs[i].CompanyName}","${jobs[i].applications[j]._id}")'>Remove From Track</button><hr>`
+            let data =`<p>Role :${jobs[companyName][j].Role}</p>
+                       <p>Status :${jobs[companyName][j].Status}</p>
+                       <p>Applied Date :${jobs[companyName][j].AppliedDate}</p>
+                       <p>Notes :${jobs[companyName][j].Notes}</p>
+                       <a href='${jobs[companyName][j].JobLink}' target='_blank'>Job Link</a>
+                       <button class='deletebtn btn btn-danger' onclick='deletejob("${companyName}","${jobs[companyName][j]._id}")'>Remove From Track</button><hr>`
             div2.innerHTML=data
             div1.appendChild(div2)
-            console.log(jobs[i].applications[j])
+            console.log(jobs[companyName][j])
         }
         total_applications.appendChild(div1)
     }
-
 }
+
 
 
 //setting date to current date in form
@@ -170,7 +157,7 @@ form.addEventListener('submit',(e)=>{
 
         async function addjob() {
             try {
-                let url = 'https://job-tracker-yvvt.onrender.com/add';
+                let url = 'http://localhost:3000/add';
                 let response = await fetch(url, {
                     method: 'POST',
                     credentials: 'include',
@@ -203,7 +190,7 @@ form.addEventListener('submit',(e)=>{
 function deletejob(companyName,job_id){
     async function del() {
         try {
-            let url = `https://job-tracker-yvvt.onrender.com/delete/${companyName}/${job_id}`;
+            let url = `http://localhost:3000/delete/${companyName}/${job_id}`;
             let response = await fetch(url);
             if (!response.ok) {
                 let error = await response.json();
@@ -227,19 +214,3 @@ function deletejob(companyName,job_id){
 
 
 
-//implementing search
-let companyNames
-function search(compName){
-        return companyNames.filter((Name)=>{
-            return Name.includes(compName)
-        })
-}
-
-let searchInp=document.getElementById('searchbar')
-searchInp.addEventListener('keyup',(e)=>{
-    console.log(search(searchInp.value))
-})
-
-function getApplicationsByCompanyName(CompName){
-
-}
