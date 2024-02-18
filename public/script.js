@@ -157,7 +157,7 @@ form.addEventListener('submit',(e)=>{
 
         async function addjob() {
             try {
-                let url = 'http://localhost:3000/add';
+                let url = 'https://job-tracker-yvvt.onrender.com/add';
                 let response = await fetch(url, {
                     method: 'POST',
                     credentials: 'include',
